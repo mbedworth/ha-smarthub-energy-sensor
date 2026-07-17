@@ -157,7 +157,11 @@ class SmartHubAPI:
                 usage_energy = 0
               else:
                 usage_energy = abs(usage_energy)
-            else: # both FORWARD and RETURN use postive values
+            elif parseType == ParseType.RETURN:
+              # SECO (and likely other utilities) report the REVERSE/RETURN meter's
+              # generation series as negative deltas, not positive - take the magnitude.
+              usage_energy = abs(usage_energy)
+            else: # FORWARD uses positive values only
               usage_energy = max(0,usage_energy)
 
 
